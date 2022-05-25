@@ -5,13 +5,10 @@ from debugpy import connect
 from requests import patch
 import win32com
 from win32com.client import Dispatch, constants
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 import sys
-from reportlab.lib.units import cm
-from zmq import NULL
-
 
 def getWordAddWatermark(content):
     wordApp = win32com.client.DispatchEx("Word.Application")  # 打开word进程

@@ -1,5 +1,9 @@
 import re
 import urllib.request
+import os
+
+path = os.path.split(__file__)[0]
+
 #爬取网页html
 def getHtml(url):
     page = urllib.request.urlopen(url)
@@ -24,8 +28,8 @@ imgCount=0
 
 #for把获取到的图片都下载到本地pic文件夹里，保存之前先在本地建一个pic文件夹
 for imgPath in imgList:
-    print("./images/pic/"+str(imgCount)+".jpg")
-    f=open("./images/pic/"+str(imgCount)+".jpg",'wb')
+    p = path + '/image/' + str(imgCount)+".jpg"
+    f=open(p,'wb')
     f.write((urllib.request.urlopen(imgPath)).read())
     f.close()
     imgCount+=1

@@ -11,7 +11,7 @@ def getHtml(url):
     return html
 html = getHtml("https://unsplash.com/s/photos/pokemon")
 
-f=open("./images/index.js",'wb')
+f=open(path + "/images/index.js",'wb')
 f.write(html)
 f.close()
 html = html.decode('UTF-8')

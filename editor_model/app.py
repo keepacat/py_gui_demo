@@ -1,7 +1,7 @@
 import sys
 import time
 
-import torch
+import os
 import numpy as np
 from numba import vectorize
 
@@ -12,17 +12,9 @@ from PyQt5.QtCore import QFile, QIODevice, QByteArray, QPoint
 ARC_TO_DEG = 57.29577951308238
 DEG_TO_ARC = 0.0174532925199433
 
-def calPoints(arr, param):
-    points = []
-    for i in range(len(arr)):
-        point = np.multiply(arr[i], param)
-        x = np.sum(point[0])
-        y = np.sum(point[1])
-        points.append([x, y])
-    return points
-
 def readObj():
-    file = QFile('./base.obj')
+    path = os.path.split(__file__)[0]
+    file = QFile(path + '/base.obj')
     file.open(QIODevice.ReadOnly)
     data = file.readAll()
     file.close()
@@ -42,6 +34,33 @@ def readObj():
                         data[3].toFloat()[0]]
                 points.append(point)
     return points
+
+def calPoints(arr, param):
+    print('calPoints ' + str(len(arr)))
+    tm = time.time()
+    points = [np.multiply(arr[i], param) for i in range(len(arr))]
+    points2 = [[np.sum(points[i][0]), np.sum(points[i][1])] for i in range(len(points))]
+
+    # for i in range(len(arr)):
+    # # for i in range(1000):
+    #     point = np.multiply(arr[i], param)
+    #     # x = np.sum(point[0])
+    #     # y = np.sum(point[1])        
+    #     x = point[0][0] + point[0][1] + point[0][2]
+    #     y = point[1][0] + point[1][1] + point[1][2]
+    #     points.append([x, y])
+
+    # points = []
+    # for i in range(len(arr)):
+    #     point = np.multiply(arr[i], param)
+    #     x = np.sum(point[0])
+    #     y = np.sum(point[1])
+    #     points.append([x, y])
+        
+    print(time.time() - tm)
+    tm = time.time()
+    print('*****************')
+    return points2
 
 class Widget(QWidget):
     def __init__(self, points):
@@ -88,7 +107,7 @@ class Widget(QWidget):
         paramy = np.array([[np.cos(oy), 0, np.sin(oy)],[0, 1, 0],[-np.sin(oy), 0, np.cos(oy)]])
         paramz = np.array([[np.cos(oz), -np.sin(oz), 0],[np.sin(oz), np.cos(oz), 0],[0, 0, 1]])
 
-        param = paramz * paramy * paramx
+        # param = paramz * paramy * paramx
         points = calPoints(np.array(self.points), paramy)
 
         print(time.time() - tm)

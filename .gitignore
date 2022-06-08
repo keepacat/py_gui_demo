@@ -6,6 +6,10 @@ __pycache__/
 # vscode log
 log/
 
+# image
+filter_image/
+*.jpeg
+
 # C extensions
 *.so
 

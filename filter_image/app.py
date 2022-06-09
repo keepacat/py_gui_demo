@@ -13,7 +13,9 @@ app = Flask(__name__)
 @app.route('/images/<name>',methods = ['POST', 'GET'])
 def images(name):
     path = filterPath + name
-    if ~os.path.exists(path):
+    if os.path.exists(path):
+        name = name
+    else:
         name = filterFiles[random.randint(0, filterFiles.__len__() - 1)]
     image = open(filterPath + name, 'rb').read()
     response = make_response(image)

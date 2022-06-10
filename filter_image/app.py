@@ -4,7 +4,6 @@ from flask import Flask, make_response, render_template
 import os
 import random
 
-filterSize = (278, 192)
 filterPath = os.path.split(__file__)[0] + '/images/'
 filterFiles = []
 
@@ -29,11 +28,15 @@ def filterFile(filepath):
     for allDir in dirs:
         path = os.path.join('%s/%s' % (filepath, allDir))
         image = Image.open(path)
-        if image.size > filterSize:
-            x = 0
-            y = 0
-            img = image.crop((x, y, x + filterSize[0], y + filterSize[1]))
-            img.save(filterPath + allDir)
+
+        tmp = min(image.width / 3, image.height / 2)
+        width = tmp * 3
+        height = tmp * 2
+        x = (image.width - width) / 2
+        y = (image.height - height) / 2
+        img = image.crop((x, y, x + width, y + height))
+        img = img.resize((300, 200), Image.ANTIALIAS)
+        img.save(filterPath + allDir)
     return dirs
 
 filterFiles.extend(filterFile('./排球少年'))

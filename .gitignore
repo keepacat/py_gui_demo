@@ -7,8 +7,9 @@ __pycache__/
 log/
 
 # image
-filter_image/
 *.jpeg
+*.jpg
+*.png
 
 # C extensions
 *.so

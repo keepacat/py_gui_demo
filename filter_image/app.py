@@ -39,8 +39,9 @@ def filterFile(filepath):
         img.save(filterPath + allDir)
     return dirs
 
-filterFiles.extend(filterFile('./排球少年'))
-filterFiles.extend(filterFile('./排球少年2'))
-filterFiles.extend(filterFile('./排球少年3'))
+# filterFile('./排球少年')
+# filterFile('./排球少年2')
+# filterFile('./排球少年3')
+filterFiles.extend(os.listdir('./images'))
 
 app.run(host="0.0.0.0", port=8080)
